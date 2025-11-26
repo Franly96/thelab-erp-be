@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import configuration from './config/configuration';
 import { CoreModule } from './core/core.module';
+import { InventoryModule } from './inventory/inventory.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
@@ -17,6 +18,7 @@ import { UsersModule } from './users/users.module';
     }),
     CoreModule,
     UsersModule,
+    InventoryModule,
     AuthModule,
   ],
   controllers: [AppController],
