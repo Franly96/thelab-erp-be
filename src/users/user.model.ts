@@ -1,5 +1,5 @@
-import { UserType } from '../core/enums/user-type.enum';
-import { UserEntity } from '../core/entities/user.entity';
+import { UserEntity } from '../database/entities/user.entity';
+import { UserType } from '../database/enums/user-type.enum';
 
 export type User = UserEntity;
 export type PublicUser = Omit<User, 'passwordHash'>;

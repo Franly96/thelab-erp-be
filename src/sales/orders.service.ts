@@ -5,14 +5,14 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
-import { InventoryEntity } from '../core/entities/inventory.entity';
-import { InvoiceEntity } from '../core/entities/invoice.entity';
-import { LocationEntity } from '../core/entities/location.entity';
-import { OrderItemEntity } from '../core/entities/order-item.entity';
-import { OrderEntity } from '../core/entities/order.entity';
-import { UserEntity } from '../core/entities/user.entity';
-import { OrderStatus } from '../core/enums/order-status.enum';
-import { UserType } from '../core/enums/user-type.enum';
+import { InventoryEntity } from '../database/entities/inventory.entity';
+import { InvoiceEntity } from '../database/entities/invoice.entity';
+import { LocationEntity } from '../database/entities/location.entity';
+import { OrderItemEntity } from '../database/entities/order-item.entity';
+import { OrderEntity } from '../database/entities/order.entity';
+import { UserEntity } from '../database/entities/user.entity';
+import { OrderStatus } from '../database/enums/order-status.enum';
+import { UserType } from '../database/enums/user-type.enum';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 
@@ -77,7 +77,10 @@ export class OrdersService {
     if (!user) {
       throw new NotFoundException(`User ${userId} not found`);
     }
-    if (user.type !== UserType.Manager && user.type !== UserType.Service) {
+    if (
+      user.userType !== UserType.Manager &&
+      user.userType !== UserType.Service
+    ) {
       throw new BadRequestException(
         'Assigned user must be of type manager or service',
       );

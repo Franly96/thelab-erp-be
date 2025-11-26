@@ -5,8 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserType } from '../core/enums/user-type.enum';
-import { UserEntity } from '../core/entities/user.entity';
+import { UserEntity } from '../database/entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { hashPassword, verifyPassword } from './password.util';
@@ -32,13 +31,6 @@ export class UsersService {
     return user;
   }
 
-  async findByEmail(email: string | null | undefined): Promise<User | null> {
-    if (!email) {
-      return null;
-    }
-    return this.usersRepo.findOne({ where: { email } });
-  }
-
   async findByFullName(fullName: string): Promise<User | null> {
     return this.usersRepo.findOne({ where: { fullName } });
   }
@@ -50,10 +42,9 @@ export class UsersService {
     }
 
     const user = this.usersRepo.create({
-      email: dto.email ?? null,
       fullName: dto.fullName,
       passwordHash: hashPassword(dto.password),
-      type: dto.type ?? UserType.Service,
+      userType: dto.userType,
     });
 
     const saved = await this.usersRepo.save(user);
@@ -63,22 +54,14 @@ export class UsersService {
   async update(id: number, dto: UpdateUserDto): Promise<PublicUser> {
     const existing = await this.findById(id);
 
-    if (dto.email !== undefined && dto.email !== existing.email) {
-      const emailOwner = await this.findByEmail(dto.email);
-      if (emailOwner && emailOwner.id !== id) {
-        throw new ConflictException('Email already in use');
-      }
-      existing.email = dto.email ?? null;
-    }
-
     if (dto.fullName) {
       existing.fullName = dto.fullName;
     }
     if (dto.password) {
       existing.passwordHash = hashPassword(dto.password);
     }
-    if (dto.type !== undefined) {
-      existing.type = dto.type;
+    if (dto.userType !== undefined) {
+      existing.userType = dto.userType;
     }
 
     const saved = await this.usersRepo.save(existing);

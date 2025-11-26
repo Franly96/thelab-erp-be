@@ -8,12 +8,11 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { BaseModel } from '../models/base.model';
 import { CategoryEntity } from './category.entity';
 import { OrderItemEntity } from './order-item.entity';
 
 @Entity('inventory')
-export class InventoryEntity implements BaseModel {
+export class InventoryEntity {
   @PrimaryGeneratedColumn({ unsigned: true })
   id!: number;
 

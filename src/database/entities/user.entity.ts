@@ -5,16 +5,12 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { BaseModel } from '../models/base.model';
 import { UserType } from '../enums/user-type.enum';
 
 @Entity('users')
-export class UserEntity implements BaseModel {
+export class UserEntity {
   @PrimaryGeneratedColumn({ unsigned: true })
   id!: number;
-
-  @Column({ type: 'varchar', length: 255, nullable: true, unique: true })
-  email!: string | null;
 
   @Column({ name: 'password_hash', type: 'varchar', length: 255 })
   passwordHash!: string;
@@ -27,7 +23,7 @@ export class UserEntity implements BaseModel {
     enum: UserType,
     default: UserType.Service,
   })
-  type!: UserType;
+  userType!: UserType;
 
   @CreateDateColumn({ name: 'created_at', type: 'datetime' })
   createdAt!: Date;

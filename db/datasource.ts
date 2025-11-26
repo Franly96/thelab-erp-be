@@ -10,7 +10,7 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_NAME || 'thelab_erp',
   synchronize: false,
   logging: false,
-  entities: [path.join(__dirname, '../src/core/entities/*.{ts,js}')],
+  entities: [path.join(__dirname, '../src/database/entities/*.{ts,js}')],
   migrations: [path.join(__dirname, './migrations/*.{ts,js}')],
   subscribers: [],
 });

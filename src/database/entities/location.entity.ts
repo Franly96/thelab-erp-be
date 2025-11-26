@@ -5,10 +5,9 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { BaseModel } from '../models/base.model';
 
-@Entity('categories')
-export class CategoryEntity implements BaseModel {
+@Entity('locations')
+export class LocationEntity {
   @PrimaryGeneratedColumn({ unsigned: true })
   id!: number;
 

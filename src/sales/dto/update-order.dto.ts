@@ -1,4 +1,4 @@
-import { OrderStatus } from '../../core/enums/order-status.enum';
+import { OrderStatus } from '../../database/enums/order-status.enum';
 import { OrderItemDto } from './order-item.dto';
 
 export class UpdateOrderDto {

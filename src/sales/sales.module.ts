@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { InvoiceEntity } from '../core/entities/invoice.entity';
-import { InventoryEntity } from '../core/entities/inventory.entity';
-import { LocationEntity } from '../core/entities/location.entity';
-import { OrderItemEntity } from '../core/entities/order-item.entity';
-import { OrderEntity } from '../core/entities/order.entity';
-import { UserEntity } from '../core/entities/user.entity';
+import { InventoryEntity } from '../database/entities/inventory.entity';
+import { InvoiceEntity } from '../database/entities/invoice.entity';
+import { LocationEntity } from '../database/entities/location.entity';
+import { OrderItemEntity } from '../database/entities/order-item.entity';
+import { OrderEntity } from '../database/entities/order.entity';
+import { UserEntity } from '../database/entities/user.entity';
 import { OrdersController } from './orders.controller';
 import { OrdersService } from './orders.service';
 

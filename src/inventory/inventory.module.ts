@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CategoryEntity } from '../core/entities/category.entity';
-import { InventoryEntity } from '../core/entities/inventory.entity';
+import { CategoryEntity } from '../database/entities/category.entity';
+import { InventoryEntity } from '../database/entities/inventory.entity';
 import { InventoryController } from './inventory.controller';
 import { InventoryService } from './inventory.service';
 

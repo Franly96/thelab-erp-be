@@ -1,8 +1,7 @@
-import { UserType } from '../../core/enums/user-type.enum';
+import { UserType } from '../user.model';
 
 export class UpdateUserDto {
-  email?: string | null;
   fullName?: string;
   password?: string;
-  type?: UserType;
+  userType?: UserType;
 }

@@ -10,14 +10,13 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { OrderStatus } from '../enums/order-status.enum';
-import { BaseModel } from '../models/base.model';
 import { InvoiceEntity } from './invoice.entity';
 import { LocationEntity } from './location.entity';
 import { OrderItemEntity } from './order-item.entity';
 import { UserEntity } from './user.entity';
 
 @Entity('orders')
-export class OrderEntity implements BaseModel {
+export class OrderEntity {
   @PrimaryGeneratedColumn({ unsigned: true })
   id!: number;
 

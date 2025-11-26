@@ -7,12 +7,11 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { BaseModel } from '../models/base.model';
 import { InventoryEntity } from './inventory.entity';
 import { OrderEntity } from './order.entity';
 
 @Entity('order_items')
-export class OrderItemEntity implements BaseModel {
+export class OrderItemEntity {
   @PrimaryGeneratedColumn({ unsigned: true })
   id!: number;
 

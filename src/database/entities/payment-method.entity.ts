@@ -5,14 +5,13 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { BaseModel } from '../models/base.model';
 
-@Entity('locations')
-export class LocationEntity implements BaseModel {
+@Entity('payment_methods')
+export class PaymentMethodEntity {
   @PrimaryGeneratedColumn({ unsigned: true })
   id!: number;
 
-  @Column({ type: 'varchar', length: 255, unique: true })
+  @Column({ type: 'varchar', length: 100, unique: true })
   name!: string;
 
   @CreateDateColumn({ name: 'created_at', type: 'datetime' })

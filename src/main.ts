@@ -9,6 +9,14 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.setGlobalPrefix('api');
+  //cors for react app consumption
+  app.enableCors({
+    origin: '*', // Allow all origins - adjust as needed for production
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type, Accept, Authorization',
+    credentials: true, // Allow sending cookies/auth tokens
+  });
 
   const config = new DocumentBuilder()
     .setTitle('ERP TheLab API')
@@ -21,11 +29,9 @@ async function bootstrap() {
 
   const documentFactory = () =>
     SwaggerModule.createDocument(app, config, options);
-  SwaggerModule.setup('api', app, documentFactory);
 
-  app.enableCors({
-    origin: 'http://localhost:5173',
-  });
+  SwaggerModule.setup('swagger', app, documentFactory);
+
   await app.listen(process.env.PORT ?? 3000);
 }
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
