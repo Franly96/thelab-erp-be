@@ -1,4 +1,4 @@
-export interface CoreModel {
+export interface BaseModel {
   createdAt: Date;
   updatedAt: Date;
 }

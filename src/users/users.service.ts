@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserEntity } from '../core/database/entities/user.entity';
+import { UserEntity } from '../core/entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { hashPassword, verifyPassword } from './password.util';

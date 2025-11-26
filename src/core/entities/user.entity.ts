@@ -5,10 +5,10 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { CoreModel } from '../../models/base.model';
+import { BaseModel } from '../models/base.model';
 
 @Entity('users')
-export class UserEntity implements CoreModel {
+export class UserEntity implements BaseModel {
   @PrimaryGeneratedColumn({ unsigned: true })
   id!: number;
 
