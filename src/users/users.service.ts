@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { UserType } from '../core/enums/user-type.enum';
 import { UserEntity } from '../core/entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -52,6 +53,7 @@ export class UsersService {
       email: dto.email ?? null,
       fullName: dto.fullName,
       passwordHash: hashPassword(dto.password),
+      type: dto.type ?? UserType.Service,
     });
 
     const saved = await this.usersRepo.save(user);
@@ -74,6 +76,9 @@ export class UsersService {
     }
     if (dto.password) {
       existing.passwordHash = hashPassword(dto.password);
+    }
+    if (dto.type !== undefined) {
+      existing.type = dto.type;
     }
 
     const saved = await this.usersRepo.save(existing);
