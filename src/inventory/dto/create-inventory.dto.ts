@@ -5,4 +5,5 @@ export class CreateInventoryDto {
   location?: string | null;
   description?: string | null;
   barcodes?: string;
+  categoryId?: number | null;
 }

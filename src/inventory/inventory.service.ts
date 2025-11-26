@@ -6,6 +6,7 @@ import {
 import { randomUUID } from 'crypto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { CategoryEntity } from '../core/entities/category.entity';
 import { InventoryEntity } from '../core/entities/inventory.entity';
 import { CreateInventoryDto } from './dto/create-inventory.dto';
 import { UpdateInventoryDto } from './dto/update-inventory.dto';
@@ -15,14 +16,22 @@ export class InventoryService {
   constructor(
     @InjectRepository(InventoryEntity)
     private readonly inventoryRepo: Repository<InventoryEntity>,
+    @InjectRepository(CategoryEntity)
+    private readonly categoriesRepo: Repository<CategoryEntity>,
   ) {}
 
   async findAll(): Promise<InventoryEntity[]> {
-    return this.inventoryRepo.find({ order: { id: 'DESC' } });
+    return this.inventoryRepo.find({
+      order: { id: 'DESC' },
+      relations: ['category'],
+    });
   }
 
   async findOne(id: number): Promise<InventoryEntity> {
-    const item = await this.inventoryRepo.findOne({ where: { id } });
+    const item = await this.inventoryRepo.findOne({
+      where: { id },
+      relations: ['category'],
+    });
     if (!item) {
       throw new NotFoundException(`Inventory item ${id} not found`);
     }
@@ -37,6 +46,21 @@ export class InventoryService {
     return `SKU-${randomUUID()}`;
   }
 
+  private async resolveCategory(
+    categoryId?: number | null,
+  ): Promise<CategoryEntity | null> {
+    if (categoryId === undefined || categoryId === null) {
+      return null;
+    }
+    const category = await this.categoriesRepo.findOne({
+      where: { id: categoryId },
+    });
+    if (!category) {
+      throw new NotFoundException(`Category ${categoryId} not found`);
+    }
+    return category;
+  }
+
   async create(dto: CreateInventoryDto): Promise<InventoryEntity> {
     const sku = dto.sku ?? this.generateSku();
     if (dto.sku) {
@@ -46,6 +70,8 @@ export class InventoryService {
       }
     }
 
+    const category = await this.resolveCategory(dto.categoryId);
+
     const item = this.inventoryRepo.create({
       name: dto.name,
       sku,
@@ -53,6 +79,7 @@ export class InventoryService {
       location: dto.location ?? 'N/A',
       description: dto.description ?? 'N/A',
       barcodes: dto.barcodes ?? 'N/A',
+      category,
     });
 
     return this.inventoryRepo.save(item);
@@ -86,6 +113,9 @@ export class InventoryService {
     }
     if (dto.barcodes !== undefined) {
       existing.barcodes = dto.barcodes;
+    }
+    if (dto.categoryId !== undefined) {
+      existing.category = await this.resolveCategory(dto.categoryId);
     }
 
     return this.inventoryRepo.save(existing);
