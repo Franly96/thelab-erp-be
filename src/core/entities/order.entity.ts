@@ -11,8 +11,8 @@ import {
 } from 'typeorm';
 import { OrderStatus } from '../enums/order-status.enum';
 import { BaseModel } from '../models/base.model';
-import { LocationEntity } from './location.entity';
 import { InvoiceEntity } from './invoice.entity';
+import { LocationEntity } from './location.entity';
 import { OrderItemEntity } from './order-item.entity';
 import { UserEntity } from './user.entity';
 

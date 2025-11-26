@@ -3,8 +3,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { randomUUID } from 'crypto';
 import { InjectRepository } from '@nestjs/typeorm';
+import { randomUUID } from 'crypto';
 import { Repository } from 'typeorm';
 import { CategoryEntity } from '../core/entities/category.entity';
 import { InventoryEntity } from '../core/entities/inventory.entity';
@@ -85,10 +85,7 @@ export class InventoryService {
     return this.inventoryRepo.save(item);
   }
 
-  async update(
-    id: number,
-    dto: UpdateInventoryDto,
-  ): Promise<InventoryEntity> {
+  async update(id: number, dto: UpdateInventoryDto): Promise<InventoryEntity> {
     const existing = await this.findOne(id);
 
     if (dto.sku && dto.sku !== existing.sku) {
@@ -105,12 +102,7 @@ export class InventoryService {
     if (dto.quantity !== undefined) {
       existing.quantity = dto.quantity;
     }
-    if (dto.location !== undefined) {
-      existing.location = dto.location;
-    }
-    if (dto.description !== undefined) {
-      existing.description = dto.description;
-    }
+
     if (dto.barcodes !== undefined) {
       existing.barcodes = dto.barcodes;
     }
