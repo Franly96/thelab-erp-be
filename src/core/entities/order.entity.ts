@@ -5,12 +5,14 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { OrderStatus } from '../enums/order-status.enum';
 import { BaseModel } from '../models/base.model';
 import { LocationEntity } from './location.entity';
+import { InvoiceEntity } from './invoice.entity';
 import { OrderItemEntity } from './order-item.entity';
 import { UserEntity } from './user.entity';
 
@@ -41,6 +43,11 @@ export class OrderEntity implements BaseModel {
     cascade: true,
   })
   orderItems!: OrderItemEntity[];
+
+  @OneToOne(() => InvoiceEntity, (invoice) => invoice.order, {
+    cascade: true,
+  })
+  invoice!: InvoiceEntity | null;
 
   @CreateDateColumn({ name: 'created_at', type: 'datetime' })
   createdAt!: Date;
