@@ -19,6 +19,7 @@ export class UserEntity {
   fullName!: string;
 
   @Column({
+    name: 'user_type',
     type: 'enum',
     enum: UserType,
     default: UserType.Service,
