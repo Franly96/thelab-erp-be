@@ -4,11 +4,13 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { BaseModel } from '../models/base.model';
 import { CategoryEntity } from './category.entity';
+import { OrderItemEntity } from './order-item.entity';
 
 @Entity('inventory')
 export class InventoryEntity implements BaseModel {
@@ -41,6 +43,9 @@ export class InventoryEntity implements BaseModel {
   @ManyToOne(() => CategoryEntity, { nullable: true })
   @JoinColumn({ name: 'category_id' })
   category!: CategoryEntity | null;
+
+  @OneToMany(() => OrderItemEntity, (item) => item.inventoryItem)
+  orderItems?: OrderItemEntity[];
 
   @CreateDateColumn({ name: 'created_at', type: 'datetime' })
   createdAt!: Date;
