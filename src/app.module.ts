@@ -7,6 +7,7 @@ import configuration from './config/configuration';
 import { CoreModule } from './core/core.module';
 import { InventoryModule } from './inventory/inventory.module';
 import { UsersModule } from './users/users.module';
+import { SalesModule } from './sales/sales.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { UsersModule } from './users/users.module';
     UsersModule,
     InventoryModule,
     AuthModule,
+    SalesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
