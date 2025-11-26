@@ -1,5 +1,9 @@
 import { NestFactory } from '@nestjs/core';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import {
+  DocumentBuilder,
+  SwaggerDocumentOptions,
+  SwaggerModule,
+} from '@nestjs/swagger';
 import 'dotenv/config';
 import { AppModule } from './app.module';
 
@@ -12,7 +16,11 @@ async function bootstrap() {
     .setVersion('1.0')
     .addTag('erp-thelab')
     .build();
-  const documentFactory = () => SwaggerModule.createDocument(app, config);
+
+  const options: SwaggerDocumentOptions = {};
+
+  const documentFactory = () =>
+    SwaggerModule.createDocument(app, config, options);
   SwaggerModule.setup('api', app, documentFactory);
 
   app.enableCors({
